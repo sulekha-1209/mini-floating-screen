@@ -37,12 +37,16 @@ async function stop() {
 }
 
 function stopCapture() {
+    if(videoElement.srcObject) {
     let tracks = videoElement.srcObject.getTracks();
     tracks.forEach(track => track.stop());
+    }
     videoElement.srcObject = null;
 }
 
-
-
 //onLoad
 selectMediaStream();
+videoElement.addEventListener('leavepictureinpicture', function(event) {
+    // Video left Picture-in-Picture.
+    stopCapture();
+  });
